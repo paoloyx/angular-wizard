@@ -37,7 +37,8 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             title: '@',
             canenter : '=',
             canexit : '=',
-            disabled: '@?wzDisabled'
+            disabled: '@?wzDisabled',
+            hasselectedproduct : '='
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {
@@ -45,6 +46,11 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         },
         link: function($scope, $element, $attrs, wizard) {
             $scope.title = $scope.title || $scope.wzTitle;
+            // Mark step as "completed" and clickable if has an associated product
+            if ($scope.hasselectedproduct) {
+                $scope.completed = true;
+                $scope.selected = false;
+            }
             wizard.addStep($scope);
         }
     };
